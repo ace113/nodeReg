@@ -2,6 +2,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const dotenv = require('dotenv')
 const expressLayouts = require('express-ejs-layouts')
+const path = require('path')
 
 // import routes
 const userRoutes = require('./routes/user')
@@ -12,6 +13,9 @@ dotenv.config();
 
 // initialize express app
 const app = express()
+
+// public path
+app.use(express.static(path.join(__dirname + 'public')))
 
 // bodyparser middlewares
 app.use(express.json())
@@ -34,6 +38,7 @@ mongoose.connect(DB,{ useNewUrlParser: true, useUnifiedTopology: true })
 app.get('/', (req, res) => {
     res.render('index')
 })
+
 // user routes
 app.use('/user', userRoutes);
 
